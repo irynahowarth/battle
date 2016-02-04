@@ -24,8 +24,18 @@ class Battle < Sinatra::Base
 
   get '/attack' do
     @game = $game
+    if @game.players[1].hit_points == 10
+      redirect to('/game_over')
+    else
+      @game.attack(@game.players[1])
+      erb :attack
+    end
+  end
+
+  get '/game_over' do
+    @game = $game
     @game.attack(@game.players[1])
-    erb :attack
+    erb :game_over
   end
   # start the server if ruby file executed directly
   run! if app_file == $0

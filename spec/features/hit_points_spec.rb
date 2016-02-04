@@ -17,3 +17,15 @@
       expect(page).to have_content("Iryna: 60 HP")
     end
   end
+
+  # As a Player,
+  # So I can Lose a game of Battle,
+  # I want to see a 'Lose' message if I reach 0HP first
+  feature "Lose a game" do
+    scenario "Player see Lose message if 0 HP reached" do
+      sign_in_and_play
+      10.times{attack_and_back_to_game}
+      click_link('Attack')
+      expect(page).to have_content("Game over! Barry lost this game.")
+    end
+  end
