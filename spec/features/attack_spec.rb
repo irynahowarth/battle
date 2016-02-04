@@ -14,9 +14,27 @@ feature "Attack" do
   # I want my attack to reduce Player 2's HP
   scenario "attack reduce opponent's HP" do
     sign_in_and_play
-    click_link('Attack')
-    click_link('Back to game')
+    attack_and_back_to_game
     expect(page).to have_content("Barry: 50 HP")
+  end
+
+  # As Player 1,
+  # So I can lose a game of Battle,
+  # I want Player 2 to attack me, and I want to get a confirmation
+  scenario "allow Player2 attack Player1 and get confirmation" do
+    sign_in_and_play
+    attack_and_back_to_game
+    click_link('Attack')
+    expect(page).to have_content("Barry hitted Iryna")
+  end
+
+  # As Player 1,
+  # So I can start to lose a game of Battle,
+  # I want Player 2's attack to reduce my HP
+  scenario "accept attack and has HP reduced" do
+    sign_in_and_play
+    2.times{attack_and_back_to_game}
+    expect(page).to have_content("Iryna: 50 HP")
   end
 
 end
